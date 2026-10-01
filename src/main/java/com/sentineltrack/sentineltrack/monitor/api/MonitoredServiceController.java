@@ -3,7 +3,7 @@ package com.sentineltrack.sentineltrack.monitor.api;
 import com.sentineltrack.sentineltrack.monitor.application.MonitoredServiceApplicationService;
 import com.sentineltrack.sentineltrack.monitor.application.RunHealthCheckService;
 import com.sentineltrack.sentineltrack.monitor.domain.HealthCheck;
-
+import com.sentineltrack.sentineltrack.monitor.application.HealthCheckApplicationService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +16,14 @@ public class MonitoredServiceController {
 
     private final MonitoredServiceApplicationService applicationService;
     private final RunHealthCheckService runHealthCheckService;
+    private final HealthCheckApplicationService healthCheckApplicationService;
 
     public MonitoredServiceController(
-            MonitoredServiceApplicationService applicationService,RunHealthCheckService runHealthCheckService) {
+            MonitoredServiceApplicationService applicationService,RunHealthCheckService runHealthCheckService, HealthCheckApplicationService healthCheckApplicationService) {
         this.applicationService = applicationService;
             this.runHealthCheckService = runHealthCheckService;
+            this.healthCheckApplicationService = healthCheckApplicationService;
+
 
     }
 
@@ -51,4 +54,12 @@ public class MonitoredServiceController {
     public ResponseEntity<List<MonitoredServiceResponse>> findAll() {
     return ResponseEntity.ok(applicationService.findAll());
     }
+    @GetMapping("/{id}/health-checks")
+        public ResponseEntity<List<HealthCheckResponse>> findHistory(
+        @PathVariable Long id) {
+
+        return ResponseEntity.ok(
+            healthCheckApplicationService.findHistory(id)
+        );
+}
 }

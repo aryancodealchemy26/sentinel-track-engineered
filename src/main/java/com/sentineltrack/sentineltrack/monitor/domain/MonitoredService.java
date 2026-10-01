@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.time.Instant;
 
 @Entity
 public class MonitoredService {
@@ -20,6 +21,8 @@ public class MonitoredService {
 
     private int checkIntervalSeconds;
 
+    private Instant lastCheckedAt;
+    
     protected MonitoredService() {
         // Required by JPA
     }
@@ -54,5 +57,13 @@ public class MonitoredService {
 
     public int getCheckIntervalSeconds() {
         return checkIntervalSeconds;
+    }
+
+    public Instant getLastCheckedAt() {
+    return lastCheckedAt;
+    }
+
+    public void markCheckedAt(Instant checkedAt) {
+    this.lastCheckedAt = checkedAt;
     }
 }
