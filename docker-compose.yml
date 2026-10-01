@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: sentineltrack-postgres
+    environment:
+      POSTGRES_DB: sentineltrack
+      POSTGRES_USER: sentineltrack
+      POSTGRES_PASSWORD: sentineltrack
+    ports:
+      - "5432:5432"
+    volumes:
+      - sentineltrack-postgres-data:/var/lib/postgresql/data
+
+volumes:
+  sentineltrack-postgres-data:
